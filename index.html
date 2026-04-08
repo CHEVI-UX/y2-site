@@ -1,0 +1,349 @@
+@page
+@model IndexModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>האתר של י2 הנדירותתת! 👑</title>
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;800&family=Varela+Round&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Varela Round', sans-serif;
+            background: #fff0f3;
+            overflow: hidden;
+        }
+
+        .header {
+            text-align: center;
+            background: linear-gradient(90deg, #ff4d6d, #ff85a2, #ff4d6d);
+            color: white;
+            padding: 15px;
+            font-size: 40px;
+            font-weight: 800;
+            border-bottom: 4px solid white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: relative;
+            z-index: 10;
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 85px);
+        }
+
+        .right {
+            flex: 1;
+            background: #ffccd5;
+            padding: 20px;
+            border-left: 2px solid white;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .left {
+            flex: 1.5;
+            background: #ffe5ec;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .girl-btn {
+            background: white;
+            border: none;
+            padding: 12px;
+            margin: 6px;
+            border-radius: 15px;
+            width: 85%;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 20px;
+            color: #ff4d6d;
+            box-shadow: 0 4px 0px #ff85a2;
+            transition: 0.2s;
+            text-align: center;
+        }
+
+            .girl-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 0px #ff85a2;
+            }
+
+        .white-note {
+            background: #fff;
+            width: 350px;
+            height: 350px;
+            padding: 25px;
+            box-shadow: 5px 10px 20px rgba(0,0,0,0.08);
+            border-radius: 2px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transform: rotate(-1deg);
+        }
+
+            .white-note::before {
+                content: "📌";
+                position: absolute;
+                top: -20px;
+                left: 50%;
+                font-size: 35px;
+                transform: translateX(-50%);
+            }
+
+        .note-header {
+            font-family: 'Amatic SC', cursive;
+            font-size: 30px;
+            color: #ff4d6d;
+            text-align: center;
+            border-bottom: 2px solid #fff0f3;
+            margin-bottom: 10px;
+        }
+
+        #class-notes {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 20px;
+            font-family: 'Assistant', sans-serif;
+            resize: none;
+            background: transparent;
+            color: #555;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.4);
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 30px;
+            width: 400px;
+            border: 5px solid #ff85a2;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            position: relative;
+        }
+
+            .modal-content h2 {
+                font-family: 'Amatic SC', cursive;
+                font-size: 45px;
+                color: #ff4d6d;
+                margin: 0 0 20px 0;
+            }
+
+        .form-group {
+            margin-bottom: 15px;
+            text-align: right;
+        }
+
+            .form-group label {
+                display: block;
+                font-weight: bold;
+                color: #ff85a2;
+                margin-bottom: 5px;
+                font-size: 14px;
+            }
+
+        .bday-main-label {
+            color: #ff4d6d !important;
+            font-size: 18px !important;
+            margin-bottom: 10px !important;
+        }
+
+        .bday-sub-label {
+            color: #ad1457 !important;
+            font-size: 14px !important;
+            margin-top: 8px;
+        }
+
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #fff0f3;
+            border-radius: 12px;
+            font-family: 'Assistant';
+            box-sizing: border-box;
+            outline: none;
+            font-size: 16px;
+        }
+
+            .form-group input:focus {
+                border-color: #ff85a2;
+            }
+
+        .save-btn {
+            background: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+            .save-btn:hover {
+                background: #c9184a;
+            }
+
+        .close-x {
+            position: absolute;
+            left: 20px;
+            top: 15px;
+            font-size: 25px;
+            cursor: pointer;
+            color: #ffccd5;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">האתר של י2 הנדירותתת!👑</div>
+
+    <div class="container">
+        <div class="right">
+            <button class="girl-btn" onclick="openEdit('אילה איזן')">אילה איזן 🌀</button>
+            <button class="girl-btn" onclick="openEdit('הדס בוקובסקי')">הדס בוקובסקי 🍭</button>
+            <button class="girl-btn" onclick="openEdit('יעל בן משה')">יעל בן משה ⚡</button>
+            <button class="girl-btn" onclick="openEdit('שירה בן שלום')">שירה בן שלום 💖</button>
+            <button class="girl-btn" onclick="openEdit('אפרת גולדברג')">אפרת גולדברג 🌈</button>
+            <button class="girl-btn" onclick="openEdit('שירה גרוס')">שירה גרוס 🎀</button>
+            <button class="girl-btn" onclick="openEdit('צופיה וסרמן')">צופיה וסרמן 🍒</button>
+            <button class="girl-btn" onclick="openEdit('רות ורנר')">רות ורנר 💫</button>
+            <button class="girl-btn" onclick="openEdit('הדס ויסברג')">הדס ויסברג 🫧</button>
+            <button class="girl-btn" onclick="openEdit('כבי וינגוט')">כבי וינגוט 🍫</button>
+            <button class="girl-btn" onclick="openEdit('שירה זוין')">שירה זוין ❣️</button>
+            <button class="girl-btn" onclick="openEdit('רעות זילברמן')">רעות זילברמן 🌞</button>
+            <button class="girl-btn" onclick="openEdit('שיראל חלילי')">שיראל חלילי 🧁</button>
+            <button class="girl-btn" onclick="openEdit('הדס טורשי')">הדס טורשי 😄</button>
+            <button class="girl-btn" onclick="openEdit('נעמה טיקוצ\'ינסקי')">נעמה טיקוצ'ינסקי ✨</button>
+            <button class="girl-btn" onclick="openEdit('נועה כהן')">נועה כהן 😎</button>
+            <button class="girl-btn" onclick="openEdit('חני כץ')">חני כץ 🙃</button>
+            <button class="girl-btn" onclick="openEdit('הדס כץ')">הדס כץ 🏵️</button>
+            <button class="girl-btn" onclick="openEdit('טליה לוי')">טליה לוי 🩵</button>
+            <button class="girl-btn" onclick="openEdit('פניני מושקביץ')">פניני מושקביץ 😺</button>
+            <button class="girl-btn" onclick="openEdit('שירה נגר')">שירה נגר 💥</button>
+            <button class="girl-btn" onclick="openEdit('שילת סויסה')">שילת סויסה 😊</button>
+            <button class="girl-btn" onclick="openEdit('יעל ספיר')">יעל ספיר 💜</button>
+            <button class="girl-btn" onclick="openEdit('מיכל עדני')">מיכל עדני 🌺</button>
+            <button class="girl-btn" onclick="openEdit('אפרת פולסקי')">אפרת פולסקי 💚</button>
+            <button class="girl-btn" onclick="openEdit('שולמית פינס')">שולמית פינס 🧡</button>
+            <button class="girl-btn" onclick="openEdit('נועה צוברי')">נועה צוברי 🩷</button>
+            <button class="girl-btn" onclick="openEdit('אורית קדוש')">אורית קדוש 🎖️</button>
+            <button class="girl-btn" onclick="openEdit('אפרת קנדלר')">אפרת קנדלר 💛</button>
+            <button class="girl-btn" onclick="openEdit('מעיין רסין')">מעיין רסין 💢</button>
+            <button class="girl-btn" onclick="openEdit('אפרת רצון')">אפרת רצון ❣️</button>
+            <button class="girl-btn" onclick="openEdit('אמונה שאבי')">אמונה שאבי 🤓</button>
+            <button class="girl-btn" onclick="openEdit('')"></button>
+        </div>
+
+        <div class="left">
+            <h2 style="font-family: 'Amatic SC'; color: #ff85a2; font-size: 40px;">עדכונים מהכיתה ✨</h2>
+            <div class="white-note">
+                <div class="note-header">לוח מודעות</div>
+                <textarea id="class-notes" placeholder="כתבו כאן הודעה לכולן..." oninput="saveGeneralNotes()"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-x" onclick="closeModal()">&times;</span>
+            <h2 id="edit-name">שם הבת</h2>
+
+            <div class="form-group">
+                <label class="bday-main-label">🎂 תאריך יומולדת:</label>
+                <label class="bday-sub-label">תאריך לועזי:</label>
+                <input type="text" id="in-bday-loezi" placeholder="למשל: 15.4">
+                <label class="bday-sub-label">תאריך עברי:</label>
+                <input type="text" id="in-bday-ivri" placeholder="למשל: י' באייר">
+            </div>
+
+            <div class="form-group">
+                <label>📱 מספר טלפון:</label>
+                <input type="text" id="in-phone" placeholder="05X-XXXXXXX">
+            </div>
+            <div class="form-group">
+                <label>🏠 כתובת:</label>
+                <input type="text" id="in-addr" placeholder="רחוב ומספר">
+            </div>
+            <div class="form-group">
+                <label>📝 קצת עלי:</label>
+                <textarea id="in-desc" rows="3" placeholder="מה בא לך שנדע עלייך?"></textarea>
+            </div>
+
+            <button class="save-btn" onclick="saveGirlData()">שמירת הפרטים שלי 💕</button>
+        </div>
+    </div>
+
+    <script>
+        let currentGirl = "";
+
+        window.onload = function() {
+            document.getElementById('class-notes').value = localStorage.getItem('globalNotes') || "";
+        };
+
+        function saveGeneralNotes() {
+            localStorage.setItem('globalNotes', document.getElementById('class-notes').value);
+        }
+
+        function openEdit(name) {
+            currentGirl = name;
+            document.getElementById('edit-name').innerText = "הפרטים של " + name;
+            let savedData = JSON.parse(localStorage.getItem('girl_' + name) || '{}');
+            document.getElementById('in-bday-loezi').value = savedData.loezi || "";
+            document.getElementById('in-bday-ivri').value = savedData.ivri || "";
+            document.getElementById('in-phone').value = savedData.phone || "";
+            document.getElementById('in-addr').value = savedData.addr || "";
+            document.getElementById('in-desc').value = savedData.desc || "";
+            document.getElementById('editModal').style.display = "block";
+        }
+
+        function saveGirlData() {
+            let data = {
+                loezi: document.getElementById('in-bday-loezi').value,
+                ivri: document.getElementById('in-bday-ivri').value,
+                phone: document.getElementById('in-phone').value,
+                addr: document.getElementById('in-addr').value,
+                desc: document.getElementById('in-desc').value
+            };
+            localStorage.setItem('girl_' + currentGirl, JSON.stringify(data));
+            alert("הפרטים של " + currentGirl + " נשמרו בהצלחה!");
+            closeModal();
+        }
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('editModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
