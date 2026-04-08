@@ -41,9 +41,8 @@
             width: 100vw;
         }
 
-        /* צד שמאל - הפתק */
         .left-side {
-            flex: 1; /* לוקח חלק אחד מהמסך */
+            flex: 1;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -73,9 +72,8 @@
                 font-size: 40px;
             }
 
-        /* צד ימין - רשימת שמות רחבה מאוד */
         .right-side-scroll {
-            flex: 1.5; /* נותן לצד של השמות יותר שטח מסך (60% מהרווח) */
+            flex: 1.5;
             height: 100vh;
             overflow-y: scroll;
             padding-top: 140px;
@@ -93,15 +91,14 @@
                 border-radius: 10px;
             }
 
-        /* המשבצות המורחבות באמת */
         .girl-btn {
             background: white;
             border: none;
             padding: 18px;
             margin: 10px;
             border-radius: 25px;
-            width: 500px; /* הגדלה משמעותית של רוחב המשבצת */
-            max-width: 90%; /* מוודא שזה לא יחרוג במסכים קטנים */
+            width: 500px;
+            max-width: 90%;
             cursor: pointer;
             font-weight: bold;
             font-size: 24px;
@@ -115,31 +112,34 @@
             .girl-btn:hover {
                 transform: scale(1.02);
                 background: #fff0f3;
-                box-shadow: 0 8px 20px rgba(0,0,0,0.15);
             }
 
-        /* Modal */
+        /* תיקון החלון הקופץ - מרכוז ומניעת חיתוך */
         .modal {
             display: none;
             position: fixed;
-            z-index: 1000;
+            z-index: 2000;
             left: 0;
             top: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0,0,0,0.6);
             justify-content: center;
             align-items: center;
+            padding: 20px;
+            box-sizing: border-box;
         }
 
         .modal-content {
             background: white;
             padding: 30px;
             border-radius: 20px;
-            width: 380px;
+            width: 400px;
+            max-height: 90vh; /* מונע מהחלון להיות גבוה מהמסך */
+            overflow-y: auto; /* מוסיף גלילה פנימית אם יש המון טקסט */
             position: relative;
             text-align: right;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
             border: 5px solid #ffb3c1;
         }
 
@@ -148,8 +148,9 @@
             top: 10px;
             left: 15px;
             cursor: pointer;
-            font-size: 28px;
+            font-size: 32px;
             color: #ff4d6d;
+            font-weight: bold;
         }
 
         .form-group {
@@ -162,28 +163,36 @@
                 font-weight: bold;
                 margin-bottom: 5px;
                 color: #ff4d6d;
+                font-size: 18px;
             }
 
             .form-group input, .form-group textarea {
-                padding: 10px;
+                padding: 12px;
                 border: 2px solid #ffb3c1;
                 border-radius: 10px;
                 font-family: inherit;
-                font-size: 16px;
+                font-size: 18px;
+                width: 100%;
+                box-sizing: border-box;
             }
 
         .save-btn {
             background: #ff4d6d;
             color: white;
             border: none;
-            padding: 12px;
+            padding: 15px;
             border-radius: 12px;
             cursor: pointer;
             width: 100%;
-            font-size: 20px;
+            font-size: 22px;
             margin-top: 10px;
             font-weight: bold;
+            transition: 0.2s;
         }
+
+            .save-btn:hover {
+                background: #ff1a4d;
+            }
 
         .note-header {
             font-family: 'Amatic SC', cursive;
@@ -259,10 +268,30 @@
         </div>
     </div>
 
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-x" onclick="closeModal()">&times;</span>
+            <h2 id="edit-name" style="color:#ff4d6d; font-family:'Amatic SC'; font-size: 40px; margin: 0 0 20px 0; text-align: center;">פרטים</h2>
+            <div class="form-group"><label>🎂 יומולדת לועזי:</label><input type="text" id="in-bday-loezi"></div>
+            <div class="form-group"><label>📅 יומולדת עברי:</label><input type="text" id="in-bday-ivri"></div>
+            <div class="form-group"><label>📱 טלפון:</label><input type="text" id="in-phone"></div>
+            <div class="form-group"><label>🏠 כתובת:</label><input type="text" id="in-addr"></div>
+            <div class="form-group"><label>📝 ועוד משהו:</label><textarea id="in-desc" rows="4"></textarea></div>
+            <button class="save-btn" onclick="saveGirlData()">שמירה 💕</button>
+        </div>
+    </div>
+
     <script>
         let currentGirl = "";
-        window.onload = function() { document.getElementById('class-notes').value = localStorage.getItem('globalNotes') || ""; };
-        function saveGeneralNotes() { localStorage.setItem('globalNotes', document.getElementById('class-notes').value); }
+
+        window.onload = function() {
+            document.getElementById('class-notes').value = localStorage.getItem('globalNotes') || "";
+        };
+
+        function saveGeneralNotes() {
+            localStorage.setItem('globalNotes', document.getElementById('class-notes').value);
+        }
+
         function openEdit(name) {
             currentGirl = name;
             document.getElementById('edit-name').innerText = "הפרטים של " + name;
@@ -274,14 +303,27 @@
             document.getElementById('in-desc').value = savedData.desc || "";
             document.getElementById('editModal').style.display = "flex";
         }
+
         function saveGirlData() {
-            let data = { loezi: document.getElementById('in-bday-loezi').value, ivri: document.getElementById('in-bday-ivri').value, phone: document.getElementById('in-phone').value, addr: document.getElementById('in-addr').value, desc: document.getElementById('in-desc').value };
+            let data = {
+                loezi: document.getElementById('in-bday-loezi').value,
+                ivri: document.getElementById('in-bday-ivri').value,
+                phone: document.getElementById('in-phone').value,
+                addr: document.getElementById('in-addr').value,
+                desc: document.getElementById('in-desc').value
+            };
             localStorage.setItem('girl_' + currentGirl, JSON.stringify(data));
-            alert("הפרטים נשמרו בהצלחה!");
+            alert("הפרטים נשמרו!");
             closeModal();
         }
-        function closeModal() { document.getElementById('editModal').style.display = "none"; }
-        window.onclick = function(event) { if (event.target == document.getElementById('editModal')) closeModal(); }
+
+        function closeModal() {
+            document.getElementById('editModal').style.display = "none";
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('editModal')) closeModal();
+        }
     </script>
 </body>
 </html>
