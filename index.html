@@ -2,7 +2,8 @@
 <html lang="he" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>האתר של י2 הנדירותתת! 👑</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>האתר של י2 הנדירות 👑</title>
     <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;800&family=Varela+Round&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
@@ -10,25 +11,26 @@
 
     <style>
         body, html { margin: 0; padding: 0; height: 100vh; width: 100vw; font-family: 'Varela Round', sans-serif; background: #ff85a2; overflow: hidden; }
-        .header { position: fixed; top: 0; right: 50px; color: white; font-size: 70px; font-family: 'Amatic SC', cursive; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); padding-top: 20px; z-index: 100; pointer-events: none; }
+        .header { position: fixed; top: 0; right: 50px; color: white; font-size: 60px; font-family: 'Amatic SC', cursive; font-weight: 800; text-shadow: 2px 2px 4px rgba(0,0,0,0.2); padding-top: 20px; z-index: 100; pointer-events: none; }
         .container { display: flex; height: 100vh; width: 100vw; }
         .left-side { flex: 1; display: flex; justify-content: center; align-items: center; padding-top: 80px; }
-        .white-note { background: white; width: 420px; height: 420px; padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border-radius: 5px; transform: rotate(-1.5deg); display: flex; flex-direction: column; position: relative; box-sizing: border-box; }
+        .white-note { background: white; width: 380px; height: 380px; padding: 30px; box-shadow: 0 15px 40px rgba(0,0,0,0.2); border-radius: 5px; transform: rotate(-1.5deg); display: flex; flex-direction: column; position: relative; box-sizing: border-box; }
         .white-note::before { content: "📌"; position: absolute; top: -25px; left: 50%; transform: translateX(-50%); font-size: 40px; }
-        .right-side-scroll { flex: 1.5; height: 100vh; overflow-y: scroll; padding-top: 140px; display: flex; flex-direction: column; align-items: center; }
-        .girl-btn { background: white; border: none; padding: 18px; margin: 10px; border-radius: 25px; width: 500px; max-width: 90%; cursor: pointer; font-weight: bold; font-size: 24px; color: #ff4d6d; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; flex-shrink: 0; text-align: center; }
+        .right-side-scroll { flex: 1.5; height: 100vh; overflow-y: auto; padding-top: 140px; display: flex; flex-direction: column; align-items: center; }
+        .girl-btn { background: white; border: none; padding: 15px; margin: 8px; border-radius: 20px; width: 450px; max-width: 90%; cursor: pointer; font-weight: bold; font-size: 22px; color: #ff4d6d; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; flex-shrink: 0; }
         .modal { display: none; position: fixed; z-index: 9999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 400px; position: relative; text-align: right; border: 5px solid #ffb3c1; }
-        .close-x { position: absolute; top: 10px; left: 15px; cursor: pointer; font-size: 32px; color: #ff4d6d; }
+        .modal-content { background: white; padding: 30px; border-radius: 20px; width: 350px; position: relative; text-align: right; border: 5px solid #ffb3c1; }
+        .close-x { position: absolute; top: 10px; left: 15px; cursor: pointer; font-size: 30px; color: #ff4d6d; font-weight: bold; }
         .form-group { margin-bottom: 15px; display: flex; flex-direction: column; }
-        .form-group label { font-weight: bold; color: #ff4d6d; }
+        .form-group label { font-weight: bold; color: #ff4d6d; margin-bottom: 5px; }
         .form-group input, .form-group textarea { padding: 10px; border: 2px solid #ffb3c1; border-radius: 10px; font-size: 16px; width: 100%; box-sizing: border-box; }
-        .save-btn { background: #ff4d6d; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 20px; font-weight: bold; }
-        #class-notes { flex: 1; border: none; outline: none; font-size: 26px; resize: none; background: transparent; font-family: 'Assistant', sans-serif; }
+        .save-btn { background: #ff4d6d; color: white; border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; font-size: 18px; font-weight: bold; }
+        #class-notes { flex: 1; border: none; outline: none; font-size: 22px; resize: none; background: transparent; font-family: 'Assistant', sans-serif; width: 100%; }
+        .spacer { height: 100px; flex-shrink: 0; }
     </style>
 </head>
 <body>
-    <div class="header">האתר של י2 הנדירותתת! 👑</div>
+    <div class="header">האתר של י2 הנדירות 👑</div>
     <div class="container">
         <div class="left-side">
             <div class="white-note">
@@ -37,17 +39,19 @@
         </div>
         <div class="right-side-scroll">
             <button class="girl-btn" onclick="openEdit('אילה איזן')">אילה איזן 🌀</button>
+            <button class="girl-btn" onclick="openEdit('כבי וינגוט')">כבי וינגוט 🍫</button>
             <button class="girl-btn" onclick="openEdit('הדס בוקובסקי')">הדס בוקובסקי 🍭</button>
-            </div>
+            <div class="spacer"></div>
+        </div>
     </div>
 
     <div id="editModal" class="modal">
         <div class="modal-content">
             <span class="close-x" onclick="closeModal()">&times;</span>
             <h2 id="edit-name">פרטים</h2>
-            <div class="form-group"><label>🎂 יומולדת לועזי:</label><input type="text" id="in-loezi"></div>
+            <div class="form-group"><label>🎂 יומולדת:</label><input type="text" id="in-loezi"></div>
             <div class="form-group"><label>📱 טלפון:</label><input type="text" id="in-phone"></div>
-            <button class="save-btn" onclick="saveGirlData()">שמירה לכולן 💕</button>
+            <button class="save-btn" onclick="saveGirlData()">שמירה 💕</button>
         </div>
     </div>
 
@@ -80,7 +84,7 @@
         }
         function saveGirlData() {
             const d = { loezi: document.getElementById('in-loezi').value, phone: document.getElementById('in-phone').value };
-            db.ref('girls/' + currentGirl).set(d).then(() => { alert("נשמר!"); closeModal(); });
+            db.ref('girls/' + currentGirl).set(d).then(() => { closeModal(); });
         }
         function closeModal() { document.getElementById('editModal').style.display = "none"; }
     </script>
