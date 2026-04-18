@@ -3,37 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <title>האתר של י2 👑</title>
-    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;800&family=Varela+Round&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;800&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-database-compat.js"></script>
     <style>
-        body, html { margin: 0; padding: 0; height: 100vh; width: 100vw; font-family: 'Varela Round', sans-serif; background: #ff85a2; overflow: hidden; }
-        .header { position: fixed; top: 0; right: 50px; color: white; font-size: 60px; font-family: 'Amatic SC', cursive; font-weight: 800; padding-top: 20px; z-index: 100; }
-        .container { display: flex; height: 100vh; width: 100vw; }
-        .left-side { flex: 1; display: flex; justify-content: center; align-items: center; }
-        .white-note { background: white; width: 350px; height: 350px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-radius: 5px; transform: rotate(-1deg); display: flex; flex-direction: column; }
-        .right-side-scroll { flex: 1.5; height: 100vh; overflow-y: auto; padding-top: 140px; display: flex; flex-direction: column; align-items: center; }
-        .girl-btn { background: white; border: none; padding: 15px; margin: 8px; border-radius: 20px; width: 80%; cursor: pointer; font-weight: bold; font-size: 22px; color: #ff4d6d; box-shadow: 0 5px 10px rgba(0,0,0,0.05); }
+        body { margin: 0; background: #ff85a2; font-family: 'Assistant', sans-serif; overflow-x: hidden; }
+        .header { text-align: center; color: white; font-size: 50px; font-family: 'Amatic SC', cursive; padding: 20px; }
+        .main-container { display: flex; flex-wrap: wrap; justify-content: space-around; padding: 20px; }
+        .note-area { background: white; width: 300px; height: 300px; padding: 20px; border-radius: 5px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin-bottom: 20px; }
+        .girls-list { background: rgba(255,255,255,0.3); padding: 20px; border-radius: 20px; width: 350px; max-height: 70vh; overflow-y: auto; }
+        .girl-btn { background: white; border: none; padding: 12px; margin: 5px; border-radius: 15px; width: 100%; cursor: pointer; color: #ff4d6d; font-weight: bold; font-size: 18px; }
+        #class-notes { width: 100%; height: 100%; border: none; outline: none; font-size: 20px; resize: none; background: transparent; }
         .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); justify-content: center; align-items: center; }
-        .modal-content { background: white; padding: 25px; border-radius: 15px; width: 300px; text-align: right; border: 4px solid #ffb3c1; position: relative; }
-        .close-x { position: absolute; top: 5px; left: 10px; cursor: pointer; font-size: 25px; color: #ff4d6d; }
-        #class-notes { flex: 1; border: none; outline: none; font-size: 22px; resize: none; background: transparent; font-family: 'Assistant', sans-serif; }
+        .modal-content { background: white; padding: 20px; border-radius: 15px; width: 280px; text-align: right; }
+        input { width: 100%; padding: 8px; margin: 5px 0; box-sizing: border-box; }
     </style>
 </head>
 <body>
     <div class="header">האתר של י2 👑</div>
-    <div class="container">
-        <div class="left-side">
-            <div class="white-note">
-                <textarea id="class-notes" placeholder="כתבו כאן הודעה לכולן..." oninput="updateNotesInDB(this.value)"></textarea>
-            </div>
+    <div class="main-container">
+        <div class="note-area">
+            <textarea id="class-notes" placeholder="כתבו כאן הודעה..." oninput="updateNotesInDB(this.value)"></textarea>
         </div>
-        <div class="right-side-scroll">
+        <div class="girls-list">
             <button class="girl-btn" onclick="openEdit('אילה איזן')">אילה איזן 🌀</button>
             <button class="girl-btn" onclick="openEdit('הדס בוקובסקי')">הדס בוקובסקי 🍭</button>
             <button class="girl-btn" onclick="openEdit('יעל בן משה')">יעל בן משה ⚡</button>
             <button class="girl-btn" onclick="openEdit('שירה בן שלום')">שירה בן שלום 💖</button>
             <button class="girl-btn" onclick="openEdit('אפרת גולדברג')">אפרת גולדברג 🌈</button>
+             <button class="girl-btn" onclick="openEdit('לאה גולדברג')">לאה גולדברג✌️</button>
             <button class="girl-btn" onclick="openEdit('שירה גרוס')">שירה גרוס 🎀</button>
             <button class="girl-btn" onclick="openEdit('צופיה וסרמן')">צופיה וסרמן 🍒</button>
             <button class="girl-btn" onclick="openEdit('רות ורנר')">רות ורנר 💫</button>
@@ -61,18 +59,19 @@
             <button class="girl-btn" onclick="openEdit('מעיין רסין')">מעיין רסין 💢</button>
             <button class="girl-btn" onclick="openEdit('אפרת רצון')">אפרת רצון ❣️</button>
             <button class="girl-btn" onclick="openEdit('אמונה שאבי')">אמונה שאבי 🤓</button>
-            <div style="height: 100px;"></div>
         </div>
     </div>
+
     <div id="editModal" class="modal">
         <div class="modal-content">
-            <span class="close-x" onclick="closeModal()">&times;</span>
-            <h2 id="edit-name" style="margin-top:0">פרטים</h2>
-            <p>יומולדת: <input type="text" id="in-loezi" style="width:100%; padding:8px; border-radius:5px; border:1px solid #ccc;"></p>
-            <p>טלפון: <input type="text" id="in-phone" style="width:100%; padding:8px; border-radius:5px; border:1px solid #ccc;"></p>
-            <button onclick="saveGirlData()" style="background:#ff4d6d; color:white; border:none; padding:12px; width:100%; border-radius:10px; cursor:pointer; font-weight:bold;">שמירה 💕</button>
+            <h2 id="edit-name">פרטים</h2>
+            <p>יומולדת: <input type="text" id="in-loezi"></p>
+            <p>טלפון: <input type="text" id="in-phone"></p>
+            <button onclick="saveGirlData()" style="background:#ff4d6d; color:white; border:none; padding:10px; width:100%; cursor:pointer; border-radius:10px;">שמירה 💕</button>
+            <button onclick="closeModal()" style="background:#ccc; border:none; padding:5px; width:100%; margin-top:5px; cursor:pointer; border-radius:10px;">סגירה</button>
         </div>
     </div>
+
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyB1VW2eFp611JYcHFlpTyljSsu9cICAl_k",
@@ -86,4 +85,22 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
         let currentGirl = "";
-        db.ref('globalNotes
+
+        db.ref('globalNotes').on('value', (s) => { document.getElementById('class-notes').value = s.val() || ""; });
+        function updateNotesInDB(v) { db.ref('globalNotes').set(v); }
+
+        function openEdit(name) {
+            currentGirl = name;
+            document.getElementById('edit-name').innerText = name;
+            document.getElementById('editModal').style.display = "flex";
+            db.ref('girls/' + name).once('value').then((s) => {
+                const d = s.val() || {};
+                document.getElementById('in-loezi').value = d.loezi || "";
+                document.getElementById('in-phone').value = d.phone || "";
+            });
+        }
+        function saveGirlData() {
+            const d = { loezi: document.getElementById('in-loezi').value, phone: document.getElementById('in-phone').value };
+            db.ref('girls/' + currentGirl).set(d).then(() => { closeModal(); });
+        }
+        function closeModal() { document.getElementById('editModal
