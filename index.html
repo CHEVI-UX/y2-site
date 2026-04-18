@@ -78,4 +78,150 @@
         .form-group input, .form-group textarea { padding: 12px; border: 2px solid #ffb3c1; border-radius: 10px; font-family: inherit; font-size: 18px; width: 100%; box-sizing: border-box; }
         .save-btn { background: #ff4d6d; color: white; border: none; padding: 15px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 22px; margin-top: 10px; font-weight: bold; }
 
-        .note-header { font-family: 'Amatic SC', cursive; font-size: 45px; color: #ff4d6d; text-align: center; border-bottom: 3px solid #ffb3c1;
+        .note-header { font-family: 'Amatic SC', cursive; font-size: 45px; color: #ff4d6d; text-align: center; border-bottom: 3px solid #ffb3c1; margin-bottom: 20px; }
+        #class-notes { flex: 1; border: none; outline: none; font-size: 26px; resize: none; background: transparent; font-family: 'Assistant', sans-serif; width: 100%; height: 100%; }
+        .spacer { height: 150px; flex-shrink: 0; }
+    </style>
+</head>
+<body>
+
+    <div class="header">האתר של י2 הנדירותתת! 👑</div>
+
+    <div class="container">
+        <div class="left-side">
+            <div class="white-note">
+                <div class="note-header">לוח מודעות</div>
+                <textarea id="class-notes" placeholder="כתבו כאן הודעה לכולן..." oninput="updateNotesInDB(this.value)"></textarea>
+            </div>
+        </div>
+
+        <div class="right-side-scroll">
+            <button class="girl-btn" onclick="openEdit('אילה איזן')">אילה איזן 🌀</button>
+            <button class="girl-btn" onclick="openEdit('הדס בוקובסקי')">הדס בוקובסקי 🍭</button>
+            <button class="girl-btn" onclick="openEdit('יעל בן משה')">יעל בן משה ⚡</button>
+            <button class="girl-btn" onclick="openEdit('שירה בן שלום')">שירה בן שלום 💖</button>
+            <button class="girl-btn" onclick="openEdit('אפרת גולדברג')">אפרת גולדברג 🌈</button>
+            <button class="girl-btn" onclick="openEdit('שירה גרוס')">שירה גרוס 🎀</button>
+            <button class="girl-btn" onclick="openEdit('צופיה וסרמן')">צופיה וסרמן 🍒</button>
+            <button class="girl-btn" onclick="openEdit('רות ורנר')">רות ורנר 💫</button>
+            <button class="girl-btn" onclick="openEdit('הדס ויסברג')">הדס ויסברג 🫧</button>
+            <button class="girl-btn" onclick="openEdit('כבי וינגוט')">כבי וינגוט 🍫</button>
+            <button class="girl-btn" onclick="openEdit('שירה זוין')">שירה זוין ❣️</button>
+            <button class="girl-btn" onclick="openEdit('רעות זילברמן')">רעות זילברמן 🌞</button>
+            <button class="girl-btn" onclick="openEdit('שיראל חלילי')">שיראל חלילי 🧁</button>
+            <button class="girl-btn" onclick="openEdit('הדס טורשי')">הדס טורשי 😄</button>
+            <button class="girl-btn" onclick="openEdit('נעמה טיקוצ\'ינסקי')">נעמה טיקוצ'ינסקי ✨</button>
+            <button class="girl-btn" onclick="openEdit('נועה כהן')">נועה כהן 😎</button>
+            <button class="girl-btn" onclick="openEdit('חני כץ')">חני כץ 🙃</button>
+            <button class="girl-btn" onclick="openEdit('הדס כץ')">הדס כץ 🏵️</button>
+            <button class="girl-btn" onclick="openEdit('טליה לוי')">טליה לוי 🩵</button>
+            <button class="girl-btn" onclick="openEdit('פניני מושקביץ')">פניני מושקביץ 😺</button>
+            <button class="girl-btn" onclick="openEdit('שירה נגר')">שירה נגר 💥</button>
+            <button class="girl-btn" onclick="openEdit('שילת סויסה')">שילת סויסה 😊</button>
+            <button class="girl-btn" onclick="openEdit('יעל ספיר')">יעל ספיר 💜</button>
+            <button class="girl-btn" onclick="openEdit('מיכל עדני')">מיכל עדני 🌺</button>
+            <button class="girl-btn" onclick="openEdit('אפרת פולסקי')">אפרת פולסקי 💚</button>
+            <button class="girl-btn" onclick="openEdit('שולמית פינס')">שולמית פינס 🧡</button>
+            <button class="girl-btn" onclick="openEdit('נועה צוברי')">נועה צוברי 🩷</button>
+            <button class="girl-btn" onclick="openEdit('אורית קדוש')">אורית קדוש 🎖️</button>
+            <button class="girl-btn" onclick="openEdit('אפרת קנדלר')">אפרת קנדלר 💛</button>
+            <button class="girl-btn" onclick="openEdit('מעיין רסין')">מעיין רסין 💢</button>
+            <button class="girl-btn" onclick="openEdit('אפרת רצון')">אפרת רצון ❣️</button>
+            <button class="girl-btn" onclick="openEdit('אמונה שאבי')">אמונה שאבי 🤓</button>
+            <div class="spacer"></div>
+        </div>
+    </div>
+
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-x" onclick="closeModal()">&times;</span>
+            <h2 id="edit-name" style="color:#ff4d6d; font-family:'Amatic SC'; font-size: 40px; text-align: center;">פרטים</h2>
+            <div class="form-group"><label>🎂 יומולדת לועזי:</label><input type="text" id="in-bday-loezi"></div>
+            <div class="form-group"><label>📅 יומולדת עברי:</label><input type="text" id="in-bday-ivri"></div>
+            <div class="form-group"><label>📱 טלפון:</label><input type="text" id="in-phone"></div>
+            <div class="form-group"><label>🏠 כתובת:</label><input type="text" id="in-addr"></div>
+            <div class="form-group"><label>📝 קצת עלי:</label><textarea id="in-desc" rows="4"></textarea></div>
+            <button class="save-btn" onclick="saveGirlData()">שמירה לכולן 💕</button>
+        </div>
+    </div>
+
+    <script>
+        // המפתח שלך
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1VW2eFp611JYcHFlpTyljSsu9cICAl_k",
+            authDomain: "y2-site.firebaseapp.com",
+            databaseURL: "https://y2-site-default-rtdb.firebaseio.com",
+            projectId: "y2-site",
+            storageBucket: "y2-site.firebasestorage.app",
+            messagingSenderId: "13382539547",
+            appId: "1:13382539547:web:94c3ca2dc965a76ed45bbe",
+            measurementId: "G-EC1VML1765"
+        };
+
+        // אתחול Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
+
+        let currentGirl = "";
+
+        // האזנה ללוח מודעות
+        db.ref('globalNotes').on('value', (snapshot) => {
+            document.getElementById('class-notes').value = snapshot.val() || "";
+        });
+
+        function updateNotesInDB(val) {
+            db.ref('globalNotes').set(val);
+        }
+
+        // פונקציית פתיחת החלון
+        function openEdit(name) {
+            console.log("פותח פרטים עבור: " + name);
+            currentGirl = name;
+            document.getElementById('edit-name').innerText = "הפרטים של " + name;
+            
+            // מראה את החלון מיד
+            document.getElementById('editModal').style.display = "flex";
+
+            // טוען נתונים מהשרת (אם קיימים)
+            db.ref('girls/' + name).once('value').then((snapshot) => {
+                const data = snapshot.val() || {};
+                document.getElementById('in-bday-loezi').value = data.loezi || "";
+                document.getElementById('in-bday-ivri').value = data.ivri || "";
+                document.getElementById('in-phone').value = data.phone || "";
+                document.getElementById('in-addr').value = data.addr || "";
+                document.getElementById('in-desc').value = data.desc || "";
+            }).catch(err => {
+                console.log("שגיאה במשיכת נתונים: ", err);
+            });
+        }
+
+        function saveGirlData() {
+            const data = {
+                loezi: document.getElementById('in-bday-loezi').value,
+                ivri: document.getElementById('in-bday-ivri').value,
+                phone: document.getElementById('in-phone').value,
+                addr: document.getElementById('in-addr').value,
+                desc: document.getElementById('in-desc').value
+            };
+            
+            db.ref('girls/' + currentGirl).set(data).then(() => {
+                alert("הפרטים של " + currentGirl + " עודכנו בהצלחה! 💕");
+                closeModal();
+            }).catch(err => {
+                alert("שגיאה בשמירה! וודאי שהגדרת Rules ב-Firebase כפי שהדרכתי אותך.");
+            });
+        }
+
+        function closeModal() { 
+            document.getElementById('editModal').style.display = "none"; 
+        }
+
+        // סגירה בלחיצה מחוץ לחלון
+        window.onclick = function(event) { 
+            if (event.target == document.getElementById('editModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
